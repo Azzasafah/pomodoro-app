@@ -1,0 +1,359 @@
+/* Pomodoro Lo-Fi VTuber Stream Design System & Keyframes */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=VT323&display=swap');
+
+/* ==========================================================================
+   Base & Dark Theme (Default)
+   ========================================================================== */
+
+.app-wrapper {
+  font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-wrapper.dark-mode {
+  background-color: #1a1625;
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(147, 112, 219, 0.18), transparent 28%),
+    radial-gradient(circle at 85% 30%, rgba(255, 182, 193, 0.12), transparent 28%),
+    radial-gradient(circle at 50% 80%, rgba(135, 206, 235, 0.1), transparent 30%);
+  color: #e2e8f0;
+}
+
+/* ==========================================================================
+   Light Mode (Dreamy Pastel Lo-Fi Day Theme)
+   ========================================================================== */
+
+.app-wrapper.light-mode {
+  background-color: #fbf8ff;
+  background-image: 
+    radial-gradient(circle at 15% 40%, rgba(255, 182, 193, 0.35), transparent 35%),
+    radial-gradient(circle at 85% 25%, rgba(196, 181, 253, 0.35), transparent 35%),
+    radial-gradient(circle at 50% 85%, rgba(186, 230, 253, 0.3), transparent 38%);
+  color: #2e2344;
+}
+
+.font-pixel {
+  font-family: 'VT323', monospace;
+}
+
+/* ==========================================================================
+   Stream Frame OBS Style
+   ========================================================================== */
+
+.stream-frame {
+  border-radius: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .stream-frame {
+  background: linear-gradient(180deg, #2d2640 0%, #15121e 100%);
+  border: 6px solid #4a3b70;
+  box-shadow: 
+    0 0 0 3px #1a1625,
+    0 0 0 6px #5c458f,
+    0 30px 60px rgba(0, 0, 0, 0.85),
+    0 0 40px rgba(122, 84, 199, 0.2);
+}
+
+.light-mode .stream-frame {
+  background: linear-gradient(180deg, #ffffff 0%, #f6f0fd 100%);
+  border: 6px solid #c4b5fd;
+  box-shadow: 
+    0 0 0 3px #fbf8ff,
+    0 0 0 6px #ddd6fe,
+    0 25px 60px rgba(147, 112, 219, 0.2),
+    0 0 40px rgba(255, 182, 193, 0.25);
+}
+
+@media (min-width: 768px) {
+  .stream-frame {
+    border-width: 8px;
+  }
+}
+
+/* ==========================================================================
+   Lo-Fi Scanlines & Vignette Overlay
+   ========================================================================== */
+
+.lofi-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  border-radius: 16px;
+}
+
+.dark-mode .lofi-overlay {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 4px 4px;
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.75);
+}
+
+.light-mode .lofi-overlay {
+  background-image: 
+    linear-gradient(rgba(147, 112, 219, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147, 112, 219, 0.03) 1px, transparent 1px);
+  background-size: 5px 5px;
+  box-shadow: inset 0 0 100px rgba(147, 112, 219, 0.1);
+}
+
+/* ==========================================================================
+   Live2D Avatar Desk Area
+   ========================================================================== */
+
+.vtuber-desk {
+  position: absolute;
+  bottom: -10px;
+  left: 2%;
+  width: 180px;
+  height: 230px;
+  border-radius: 36px 36px 10px 10px;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 16px;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.dark-mode .vtuber-desk {
+  background: rgba(93, 75, 138, 0.18);
+  border: 3px dashed rgba(147, 112, 219, 0.45);
+}
+
+.light-mode .vtuber-desk {
+  background: rgba(235, 222, 255, 0.5);
+  border: 3px dashed rgba(167, 139, 250, 0.6);
+}
+
+@media (min-width: 1024px) {
+  .vtuber-desk {
+    width: 200px;
+    height: 250px;
+    padding-bottom: 20px;
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scaleY(1) translateY(0);
+  }
+  50% {
+    transform: scaleY(1.025) translateY(-3px);
+  }
+}
+
+.vtuber-image-container {
+  width: 130px;
+  height: 180px;
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  position: relative;
+  border-bottom: none;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .vtuber-image-container {
+  box-shadow: 0 0 25px rgba(147, 112, 219, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.light-mode .vtuber-image-container {
+  box-shadow: 0 0 25px rgba(167, 139, 250, 0.3);
+  border: 2px solid rgba(167, 139, 250, 0.4);
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+@media (min-width: 1024px) {
+  .vtuber-image-container {
+    width: 145px;
+    height: 195px;
+  }
+}
+
+.vtuber-animate {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: breathe 3.2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* ==========================================================================
+   Side Widgets (Chat & Quest Log)
+   ========================================================================== */
+
+.side-widget {
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .side-widget {
+  background: rgba(20, 17, 30, 0.88);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(147, 112, 219, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.light-mode .side-widget {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(196, 181, 253, 0.5);
+  box-shadow: 0 8px 24px rgba(147, 112, 219, 0.12);
+}
+
+/* Chat Scroll-in Animation */
+@keyframes chatScroll {
+  0% {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.chat-msg {
+  animation: chatScroll 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Todo Checkbox */
+.todo-item {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-mode .todo-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(2px);
+}
+
+.light-mode .todo-item:hover {
+  background: rgba(147, 112, 219, 0.1);
+  transform: translateX(2px);
+}
+
+.todo-checkbox {
+  appearance: none;
+  border-radius: 4px;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.dark-mode .todo-checkbox {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 2px solid #a385db;
+}
+
+.dark-mode .todo-checkbox:hover {
+  border-color: #c4b5fd;
+}
+
+.light-mode .todo-checkbox {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px solid #8b5cf6;
+}
+
+.light-mode .todo-checkbox:hover {
+  border-color: #7c3aed;
+}
+
+.todo-checkbox::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em currentColor;
+  background-color: currentColor;
+  transform-origin: center;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.dark-mode .todo-checkbox::before {
+  color: #a385db;
+}
+
+.light-mode .todo-checkbox::before {
+  color: #7c3aed;
+}
+
+.todo-checkbox:checked::before {
+  transform: scale(1);
+}
+
+/* Interactive Buttons */
+.stream-btn {
+  transition: all 0.2s ease;
+}
+
+.stream-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(147, 112, 219, 0.35);
+}
+
+.stream-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Superchat Alert Pop In */
+@keyframes popIn {
+  0% {
+    transform: scale(0.8) translateY(25px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.sc-alert {
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Custom Scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dark-mode .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #7a54c7;
+  border-radius: 4px;
+}
+
+.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9370db;
+}
+
+.light-mode .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(235, 222, 255, 0.4);
+  border-radius: 4px;
+}
+
+.light-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #c4b5fd;
+  border-radius: 4px;
+}
+
+.light-mode .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a78bfa;
+}

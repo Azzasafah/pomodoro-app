@@ -1,0 +1,128 @@
+import '@/styles/pomodoro.css';
+import { usePomodoroTimer } from '@/hooks/usePomodoroTimer';
+import { StreamHeader } from '@/components/pomodoro/StreamHeader';
+import { AvatarDesk } from '@/components/pomodoro/AvatarDesk';
+import { TimerDisplay } from '@/components/pomodoro/TimerDisplay';
+import { QuestLog } from '@/components/pomodoro/QuestLog';
+import { StreamChat } from '@/components/pomodoro/StreamChat';
+import { StreamControls } from '@/components/pomodoro/StreamControls';
+import { SuperchatAlert } from '@/components/pomodoro/SuperchatAlert';
+import { SettingsModal } from '@/components/pomodoro/SettingsModal';
+
+export default function PomodoroApp() {
+  const {
+    mode,
+    isActive,
+    timeLeft,
+    progress,
+    theme,
+    settings,
+    showSettings,
+    showSuperchat,
+    isMicOn,
+    isCamOn,
+    todos,
+    chatLog,
+    toggleTimer,
+    resetTimer,
+    changeMode,
+    setSettings,
+    setShowSettings,
+    setIsMicOn,
+    setIsCamOn,
+    addTodo,
+    toggleTodo,
+    deleteTodo,
+    sendUserChat,
+    toggleThemeMode
+  } = usePomodoroTimer();
+
+  const isLight = settings.themeMode === 'light';
+
+  return (
+    <div
+      className={`app-wrapper flex items-center justify-center p-2 sm:p-4 lg:p-6 select-none transition-colors duration-300 ${
+        isLight ? 'light-mode' : 'dark-mode'
+      }`}
+    >
+      {/* Main Stream Frame Container */}
+      <div className="stream-frame w-full max-w-[1300px] min-h-[640px] lg:h-[88vh] flex flex-col relative rounded-[24px]">
+        {/* Lo-Fi Scanline and Glow Overlay */}
+        <div className="lofi-overlay"></div>
+
+        {/* OBS Stream Top Header */}
+        <StreamHeader
+          themeMode={settings.themeMode}
+          onToggleTheme={toggleThemeMode}
+          onOpenSettings={() => setShowSettings(true)}
+        />
+
+        {/* Main Content Layout (Stream Stage 60% & Widgets 40%) */}
+        <div className="flex-1 w-full flex flex-col lg:flex-row relative z-10 p-3 sm:p-5 gap-4 overflow-hidden">
+          {/* LEFT: Stream Content (Avatar & Timer Center) */}
+          <div className="flex-[1.2] relative flex flex-col items-center justify-center pt-2 sm:pt-4 lg:pt-6">
+            {/* VTuber Live2D Desk */}
+            <AvatarDesk
+              avatarUrl={settings.vtuberImage}
+              onAvatarChange={(newUrl) =>
+                setSettings({ ...settings, vtuberImage: newUrl })
+              }
+            />
+
+            {/* Center Digital Clock & Controls */}
+            <TimerDisplay
+              mode={mode}
+              timeLeft={timeLeft}
+              isActive={isActive}
+              progress={progress}
+              theme={theme}
+              themeMode={settings.themeMode}
+              onModeChange={changeMode}
+              onToggleTimer={toggleTimer}
+              onResetTimer={resetTimer}
+            />
+
+            {/* Superchat Pop-in Alert */}
+            <SuperchatAlert show={showSuperchat} />
+          </div>
+
+          {/* RIGHT: Widgets (Quest Log & Live Chat) */}
+          <div className="flex-1 lg:max-w-[390px] flex flex-col gap-4 z-20 h-full shrink-0">
+            {/* Quest Log (To-Do List) */}
+            <QuestLog
+              todos={todos}
+              themeMode={settings.themeMode}
+              onAddTodo={addTodo}
+              onToggleTodo={toggleTodo}
+              onDeleteTodo={deleteTodo}
+            />
+
+            {/* Live Stream Chat */}
+            <StreamChat
+              chatLog={chatLog}
+              themeMode={settings.themeMode}
+              onSendMessage={sendUserChat}
+            />
+          </div>
+        </div>
+
+        {/* Bottom Stream Status (Mic & Camera Toggles) */}
+        <StreamControls
+          isMicOn={isMicOn}
+          isCamOn={isCamOn}
+          themeMode={settings.themeMode}
+          onToggleMic={() => setIsMicOn(!isMicOn)}
+          onToggleCam={() => setIsCamOn(!isCamOn)}
+        />
+      </div>
+
+      {/* Stream Configuration Settings Modal */}
+      <SettingsModal
+        isOpen={showSettings}
+        settings={settings}
+        onClose={() => setShowSettings(false)}
+        onUpdateSettings={setSettings}
+      />
+    </div>
+  );
+}
