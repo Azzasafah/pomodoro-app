@@ -1,4 +1,4 @@
-import React, { useRef, useState, type SyntheticEvent } from 'react';
+import React, { useRef, useState, type SyntheticEvent } from "react"
 import {
   X,
   MonitorPlay,
@@ -13,164 +13,169 @@ import {
   Sparkles,
   Sun,
   Moon,
-  Palette
-} from 'lucide-react';
-import type { PomodoroSettings } from '@/types/pomodoro';
-import { SOUND_OPTIONS, AVATAR_PRESETS } from '@/constants/pomodoro';
-import { triggerSoundAlert } from '@/utils/audio';
+  Palette,
+} from "lucide-react"
+import type { PomodoroSettings } from "@/types/pomodoro"
+import { SOUND_OPTIONS, AVATAR_PRESETS } from "@/constants/pomodoro"
+import { triggerSoundAlert } from "@/utils/audio"
 
 interface SettingsModalProps {
-  isOpen: boolean;
-  settings: PomodoroSettings;
-  onClose: () => void;
-  onUpdateSettings: (newSettings: PomodoroSettings) => void;
+  isOpen: boolean
+  settings: PomodoroSettings
+  onClose: () => void
+  onUpdateSettings: (newSettings: PomodoroSettings) => void
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
   isOpen,
   settings,
   onClose,
-  onUpdateSettings
+  onUpdateSettings,
 }) => {
-  const [audioFileName, setAudioFileName] = useState<string>('');
-  const [customUrlInput, setCustomUrlInput] = useState<string>('');
-  const [urlAppliedSuccess, setUrlAppliedSuccess] = useState<boolean>(false);
-  const [avatarUploadSuccess, setAvatarUploadSuccess] = useState<boolean>(false);
+  const [audioFileName, setAudioFileName] = useState<string>("")
+  const [customUrlInput, setCustomUrlInput] = useState<string>("")
+  const [urlAppliedSuccess, setUrlAppliedSuccess] = useState<boolean>(false)
+  const [avatarUploadSuccess, setAvatarUploadSuccess] = useState<boolean>(false)
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const imageInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const imageInputRef = useRef<HTMLInputElement>(null)
 
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
-  const isLight = settings.themeMode === 'light';
+  const isLight = settings.themeMode === "light"
 
   const handleAudioUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0]
     if (file) {
       // Check file size (recommend <= 4MB for localStorage)
       if (file.size > 4 * 1024 * 1024) {
-        alert('Ukuran file audio terlalu besar (maks 4MB) agar dapat tersimpan permanen.');
-        return;
+        alert(
+          "Ukuran file audio terlalu besar (maks 4MB) agar dapat tersimpan permanen."
+        )
+        return
       }
 
-      setAudioFileName(file.name);
-      const reader = new FileReader();
+      setAudioFileName(file.name)
+      const reader = new FileReader()
       reader.onload = (event) => {
-        const base64Audio = event.target?.result as string;
+        const base64Audio = event.target?.result as string
         if (base64Audio) {
           onUpdateSettings({
             ...settings,
             customAudioUrl: base64Audio,
-            sound: 'custom-audio'
-          });
+            sound: "custom-audio",
+          })
         }
-      };
-      reader.readAsDataURL(file);
+      }
+      reader.readAsDataURL(file)
     }
-  };
+  }
 
   const handleAvatarFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
+    const file = e.target.files?.[0]
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader()
       reader.onload = (event) => {
-        const base64 = event.target?.result as string;
+        const base64 = event.target?.result as string
         if (base64) {
           onUpdateSettings({
             ...settings,
-            vtuberImage: base64
-          });
-          setAvatarUploadSuccess(true);
-          setTimeout(() => setAvatarUploadSuccess(false), 3000);
+            vtuberImage: base64,
+          })
+          setAvatarUploadSuccess(true)
+          setTimeout(() => setAvatarUploadSuccess(false), 3000)
         }
-      };
-      reader.readAsDataURL(file);
+      }
+      reader.readAsDataURL(file)
     }
-  };
+  }
 
   const handleApplyCustomUrl = (e: SyntheticEvent) => {
-    e.preventDefault();
-    if (!customUrlInput.trim()) return;
+    e.preventDefault()
+    if (!customUrlInput.trim()) return
     onUpdateSettings({
       ...settings,
-      vtuberImage: customUrlInput.trim()
-    });
-    setUrlAppliedSuccess(true);
-    setTimeout(() => setUrlAppliedSuccess(false), 3000);
-    setCustomUrlInput('');
-  };
+      vtuberImage: customUrlInput.trim(),
+    })
+    setUrlAppliedSuccess(true)
+    setTimeout(() => setUrlAppliedSuccess(false), 3000)
+    setCustomUrlInput("")
+  }
 
   const handleSelectPreset = (url: string) => {
     onUpdateSettings({
       ...settings,
-      vtuberImage: url
-    });
-  };
+      vtuberImage: url,
+    })
+  }
 
   const handleResetAvatar = () => {
     onUpdateSettings({
       ...settings,
       vtuberImage:
-        'https://api.dicebear.com/8.x/adventurer/svg?seed=Vtuber&backgroundColor=b19cd9'
-    });
-  };
+        "https://api.dicebear.com/8.x/adventurer/svg?seed=Vtuber&backgroundColor=b19cd9",
+    })
+  }
 
   const handleTestSound = () => {
-    triggerSoundAlert(settings.sound, settings);
-  };
+    triggerSoundAlert(settings.sound, settings)
+  }
 
-  const toggleThemeMode = (mode: 'dark' | 'light') => {
+  const toggleThemeMode = (mode: "dark" | "light") => {
     onUpdateSettings({
       ...settings,
-      themeMode: mode
-    });
-  };
+      themeMode: mode,
+    })
+  }
 
   return (
     <div
-      className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 transition-all"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-md transition-all"
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) onClose()
       }}
     >
       <div
-        className={`border rounded-3xl w-full max-w-lg relative max-h-[90vh] overflow-y-auto shadow-2xl custom-scrollbar transition-all ${
+        className={`custom-scrollbar relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl border shadow-2xl transition-all ${
           isLight
-            ? 'bg-[#fcfaff] border-purple-300 text-gray-900 shadow-purple-900/10'
-            : 'bg-[#1a1625] border-[#5c458f] text-white shadow-black/80'
+            ? "border-purple-300 bg-[#fcfaff] text-gray-900 shadow-purple-900/10"
+            : "border-[#5c458f] bg-[#1a1625] text-white shadow-black/80"
         }`}
       >
         {/* Modal Header */}
         <div
-          className={`sticky top-0 backdrop-blur border-b p-5 flex justify-between items-center z-10 rounded-t-3xl transition-colors ${
+          className={`sticky top-0 z-10 flex items-center justify-between rounded-t-3xl border-b p-5 backdrop-blur transition-colors ${
             isLight
-              ? 'bg-white/95 border-purple-200 text-gray-900'
-              : 'bg-[#100d16]/95 border-white/10 text-white'
+              ? "border-purple-200 bg-white/95 text-gray-900"
+              : "border-white/10 bg-[#100d16]/95 text-white"
           }`}
         >
           <div className="flex items-center gap-3">
             <div
-              className={`p-2 rounded-xl border ${
+              className={`rounded-xl border p-2 ${
                 isLight
-                  ? 'bg-purple-100 border-purple-300 text-purple-700'
-                  : 'bg-purple-600/20 border-purple-500/30 text-[#a385db]'
+                  ? "border-purple-300 bg-purple-100 text-purple-700"
+                  : "border-purple-500/30 bg-purple-600/20 text-[#a385db]"
               }`}
             >
               <MonitorPlay size={20} />
             </div>
             <div>
               <h2 className="text-lg font-bold">Stream Configuration</h2>
-              <p className={`text-xs ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>
-                Sesuaikan tema tampilan, timer, avatar VTuber, &amp; alert stream
+              <p
+                className={`text-xs ${isLight ? "text-gray-500" : "text-gray-400"}`}
+              >
+                Sesuaikan tema tampilan, timer, avatar VTuber, &amp; alert
+                stream
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className={`transition-colors p-2 rounded-xl cursor-pointer ${
+            className={`cursor-pointer rounded-xl p-2 transition-colors ${
               isLight
-                ? 'text-gray-400 hover:text-gray-800 hover:bg-gray-100'
-                : 'text-gray-400 hover:text-white bg-white/5 hover:bg-red-500/20 hover:text-red-400'
+                ? "text-gray-400 hover:bg-gray-100 hover:text-gray-800"
+                : "bg-white/5 text-gray-400 hover:bg-red-500/20 hover:text-red-400 hover:text-white"
             }`}
             title="Tutup Modal"
           >
@@ -178,46 +183,52 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </button>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="space-y-6 p-6">
           {/* Section 0: Theme Mode Selection (Light / Dark) */}
           <div>
             <h3
-              className={`text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-2 ${
-                isLight ? 'text-purple-700' : 'text-[#a385db]'
+              className={`mb-3 flex items-center gap-2 text-xs font-bold tracking-widest uppercase ${
+                isLight ? "text-purple-700" : "text-[#a385db]"
               }`}
             >
               <Palette size={14} /> Tema Tampilan Stream
             </h3>
             <div
-              className={`grid grid-cols-2 gap-3 p-2.5 rounded-2xl border ${
+              className={`grid grid-cols-2 gap-3 rounded-2xl border p-2.5 ${
                 isLight
-                  ? 'bg-purple-50/70 border-purple-200/80'
-                  : 'bg-black/40 border-white/5'
+                  ? "border-purple-200/80 bg-purple-50/70"
+                  : "border-white/5 bg-black/40"
               }`}
             >
               <button
                 type="button"
-                onClick={() => toggleThemeMode('dark')}
-                className={`py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                onClick={() => toggleThemeMode("dark")}
+                className={`flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-xs font-bold transition-all sm:text-sm ${
                   !isLight
-                    ? 'bg-[#5c458f] text-white shadow-lg border border-purple-400/40'
-                    : 'bg-white/80 text-gray-700 hover:bg-white border border-gray-200'
+                    ? "border border-purple-400/40 bg-[#5c458f] text-white shadow-lg"
+                    : "border border-gray-200 bg-white/80 text-gray-700 hover:bg-white"
                 }`}
               >
-                <Moon size={16} className={!isLight ? 'text-purple-300' : 'text-gray-500'} />
+                <Moon
+                  size={16}
+                  className={!isLight ? "text-purple-300" : "text-gray-500"}
+                />
                 <span>Dark Mode (Malam)</span>
               </button>
 
               <button
                 type="button"
-                onClick={() => toggleThemeMode('light')}
-                className={`py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                onClick={() => toggleThemeMode("light")}
+                className={`flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-xs font-bold transition-all sm:text-sm ${
                   isLight
-                    ? 'bg-purple-600 text-white shadow-lg border border-purple-500'
-                    : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10'
+                    ? "border border-purple-500 bg-purple-600 text-white shadow-lg"
+                    : "border border-white/10 bg-white/5 text-gray-300 hover:bg-white/10"
                 }`}
               >
-                <Sun size={16} className={isLight ? 'text-amber-300' : 'text-gray-400'} />
+                <Sun
+                  size={16}
+                  className={isLight ? "text-amber-300" : "text-gray-400"}
+                />
                 <span>Light Mode (Pastel)</span>
               </button>
             </div>
@@ -225,22 +236,22 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
           {/* Section 1: Custom VTuber Avatar Settings */}
           <div>
-            <div className="flex items-center justify-between mb-3 pt-2 border-t border-purple-200/40">
+            <div className="mb-3 flex items-center justify-between border-t border-purple-200/40 pt-2">
               <h3
-                className={`text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${
-                  isLight ? 'text-purple-700' : 'text-[#a385db]'
+                className={`flex items-center gap-2 text-xs font-bold tracking-widest uppercase ${
+                  isLight ? "text-purple-700" : "text-[#a385db]"
                 }`}
               >
                 <ImageIcon size={14} /> Custom Avatar VTuber / Live2D
               </h3>
               {settings.vtuberImage !==
-                'https://api.dicebear.com/8.x/adventurer/svg?seed=Vtuber&backgroundColor=b19cd9' && (
+                "https://api.dicebear.com/8.x/adventurer/svg?seed=Vtuber&backgroundColor=b19cd9" && (
                 <button
                   onClick={handleResetAvatar}
-                  className={`flex items-center gap-1 text-[11px] transition-colors px-2 py-1 rounded-lg border cursor-pointer ${
+                  className={`flex cursor-pointer items-center gap-1 rounded-lg border px-2 py-1 text-[11px] transition-colors ${
                     isLight
-                      ? 'bg-white text-gray-600 hover:text-gray-900 border-gray-300'
-                      : 'bg-white/5 text-gray-400 hover:text-white border-white/10 hover:bg-white/10'
+                      ? "border-gray-300 bg-white text-gray-600 hover:text-gray-900"
+                      : "border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
                   }`}
                   title="Kembalikan ke avatar default"
                 >
@@ -250,44 +261,54 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </div>
 
             <div
-              className={`p-4 rounded-2xl border flex flex-col gap-4 ${
+              className={`flex flex-col gap-4 rounded-2xl border p-4 ${
                 isLight
-                  ? 'bg-purple-50/70 border-purple-200/80'
-                  : 'bg-black/40 border-white/5'
+                  ? "border-purple-200/80 bg-purple-50/70"
+                  : "border-white/5 bg-black/40"
               }`}
             >
               {/* Current Preview */}
               <div
-                className={`flex items-center gap-4 p-3 rounded-xl border ${
+                className={`flex items-center gap-4 rounded-xl border p-3 ${
                   isLight
-                    ? 'bg-white border-purple-200 shadow-sm'
-                    : 'bg-black/30 border-white/5'
+                    ? "border-purple-200 bg-white shadow-sm"
+                    : "border-white/5 bg-black/30"
                 }`}
               >
                 <div
-                  className={`w-16 h-16 rounded-2xl overflow-hidden border-2 shrink-0 shadow-lg relative group ${
-                    isLight ? 'border-purple-400 bg-purple-100' : 'border-[#a385db]/50 bg-black/60'
+                  className={`group relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border-2 shadow-lg ${
+                    isLight
+                      ? "border-purple-400 bg-purple-100"
+                      : "border-[#a385db]/50 bg-black/60"
                   }`}
                 >
                   <img
                     src={settings.vtuberImage}
                     alt="Preview"
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src =
-                        'https://api.dicebear.com/8.x/adventurer/svg?seed=Vtuber&backgroundColor=b19cd9';
+                      ;(e.currentTarget as HTMLImageElement).src =
+                        "https://api.dicebear.com/8.x/adventurer/svg?seed=Vtuber&backgroundColor=b19cd9"
                     }}
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity pointer-events-none">
-                    <Sparkles size={14} className="text-purple-300 animate-pulse" />
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                    <Sparkles
+                      size={14}
+                      className="animate-pulse text-purple-300"
+                    />
                   </div>
                 </div>
-                <div className="text-xs flex-1 leading-relaxed">
-                  <p className={`font-semibold ${isLight ? 'text-purple-900' : 'text-purple-200'}`}>
+                <div className="flex-1 text-xs leading-relaxed">
+                  <p
+                    className={`font-semibold ${isLight ? "text-purple-900" : "text-purple-200"}`}
+                  >
                     Avatar Aktif di Stream
                   </p>
-                  <p className={`text-[11px] mt-0.5 ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>
-                    Mendukung file gambar lokal (PNG, JPG, GIF, WebP) atau link URL online.
+                  <p
+                    className={`mt-0.5 text-[11px] ${isLight ? "text-gray-500" : "text-gray-400"}`}
+                  >
+                    Mendukung file gambar lokal (PNG, JPG, GIF, WebP) atau link
+                    URL online.
                   </p>
                 </div>
               </div>
@@ -303,16 +324,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
               <button
                 onClick={() => imageInputRef.current?.click()}
-                className={`w-full stream-btn border-2 border-dashed py-3 px-4 text-xs sm:text-sm rounded-xl flex items-center justify-center gap-2 cursor-pointer group transition-all ${
+                className={`stream-btn group flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed px-4 py-3 text-xs transition-all sm:text-sm ${
                   isLight
-                    ? 'bg-white border-purple-400 hover:border-purple-600 text-purple-900 shadow-sm hover:shadow'
-                    : 'bg-[#1a1625] border-[#a385db]/60 hover:border-[#a385db] text-gray-200 hover:text-white'
+                    ? "border-purple-400 bg-white text-purple-900 shadow-sm hover:border-purple-600 hover:shadow"
+                    : "border-[#a385db]/60 bg-[#1a1625] text-gray-200 hover:border-[#a385db] hover:text-white"
                 }`}
               >
                 <Upload
                   size={16}
-                  className={`group-hover:scale-110 transition-transform ${
-                    isLight ? 'text-purple-600' : 'text-[#a385db]'
+                  className={`transition-transform group-hover:scale-110 ${
+                    isLight ? "text-purple-600" : "text-[#a385db]"
                   }`}
                 />
                 <span className="font-semibold">
@@ -321,7 +342,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </button>
 
               {avatarUploadSuccess && (
-                <div className="flex items-center justify-center gap-1.5 text-xs text-emerald-600 bg-emerald-100/90 py-1.5 px-3 rounded-xl border border-emerald-300 font-medium">
+                <div className="flex items-center justify-center gap-1.5 rounded-xl border border-emerald-300 bg-emerald-100/90 px-3 py-1.5 text-xs font-medium text-emerald-600">
                   <Check size={14} /> Avatar berhasil diunggah &amp; tersimpan!
                 </div>
               )}
@@ -329,12 +350,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               {/* Option 2: Paste Image URL */}
               <form
                 onSubmit={handleApplyCustomUrl}
-                className={`flex gap-2 pt-1 border-t ${
-                  isLight ? 'border-purple-200' : 'border-white/10'
+                className={`flex gap-2 border-t pt-1 ${
+                  isLight ? "border-purple-200" : "border-white/10"
                 }`}
               >
                 <div className="relative flex-1">
-                  <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-gray-400">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5 text-gray-400">
                     <LinkIcon size={13} />
                   </div>
                   <input
@@ -342,20 +363,20 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     value={customUrlInput}
                     onChange={(e) => setCustomUrlInput(e.target.value)}
                     placeholder="Atau tempel Link URL gambar online..."
-                    className={`w-full border rounded-xl pl-8 pr-3 py-2 text-xs focus:outline-none transition-colors ${
+                    className={`w-full rounded-xl border py-2 pr-3 pl-8 text-xs transition-colors focus:outline-none ${
                       isLight
-                        ? 'bg-white border-purple-200 text-gray-900 placeholder:text-gray-400 focus:border-purple-500'
-                        : 'bg-black/60 border-white/10 text-white placeholder:text-gray-500 focus:border-[#a385db]'
+                        ? "border-purple-200 bg-white text-gray-900 placeholder:text-gray-400 focus:border-purple-500"
+                        : "border-white/10 bg-black/60 text-white placeholder:text-gray-500 focus:border-[#a385db]"
                     }`}
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={!customUrlInput.trim()}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shrink-0 ${
+                  className={`shrink-0 cursor-pointer rounded-xl px-3.5 py-2 text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
                     isLight
-                      ? 'bg-purple-600 text-white hover:bg-purple-700'
-                      : 'bg-[#a385db]/20 text-[#a385db] border border-[#a385db]/50 hover:bg-[#a385db] hover:text-white'
+                      ? "bg-purple-600 text-white hover:bg-purple-700"
+                      : "border border-[#a385db]/50 bg-[#a385db]/20 text-[#a385db] hover:bg-[#a385db] hover:text-white"
                   }`}
                 >
                   Terapkan
@@ -363,53 +384,56 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </form>
 
               {urlAppliedSuccess && (
-                <div className="flex items-center justify-center gap-1.5 text-xs text-emerald-600 bg-emerald-100/90 py-1.5 px-3 rounded-xl border border-emerald-300 font-medium">
+                <div className="flex items-center justify-center gap-1.5 rounded-xl border border-emerald-300 bg-emerald-100/90 px-3 py-1.5 text-xs font-medium text-emerald-600">
                   <Check size={14} /> Link avatar online berhasil diterapkan!
                 </div>
               )}
 
               {/* Preset Gallery */}
               <div
-                className={`pt-2 border-t ${isLight ? 'border-purple-200' : 'border-white/10'}`}
+                className={`border-t pt-2 ${isLight ? "border-purple-200" : "border-white/10"}`}
               >
                 <p
-                  className={`text-[11px] font-semibold mb-2.5 ${
-                    isLight ? 'text-purple-900' : 'text-gray-400'
+                  className={`mb-2.5 text-[11px] font-semibold ${
+                    isLight ? "text-purple-900" : "text-gray-400"
                   }`}
                 >
                   Pilih Cepat Avatar Preset:
                 </p>
                 <div className="grid grid-cols-6 gap-2">
                   {AVATAR_PRESETS.map((preset) => {
-                    const isSelected = settings.vtuberImage === preset.url;
+                    const isSelected = settings.vtuberImage === preset.url
                     return (
                       <button
                         key={preset.id}
                         type="button"
                         onClick={() => handleSelectPreset(preset.url)}
-                        className={`relative rounded-xl overflow-hidden aspect-square border-2 transition-all p-0.5 cursor-pointer ${
+                        className={`relative aspect-square cursor-pointer overflow-hidden rounded-xl border-2 p-0.5 transition-all ${
                           isSelected
                             ? isLight
-                              ? 'border-purple-600 ring-2 ring-purple-400/50 scale-105 bg-purple-100'
-                              : 'border-[#a385db] ring-2 ring-[#a385db]/50 scale-105 bg-black/50'
+                              ? "scale-105 border-purple-600 bg-purple-100 ring-2 ring-purple-400/50"
+                              : "scale-105 border-[#a385db] bg-black/50 ring-2 ring-[#a385db]/50"
                             : isLight
-                            ? 'border-purple-200 hover:border-purple-400 hover:scale-102 bg-white'
-                            : 'border-white/10 hover:border-purple-400/60 hover:scale-102 bg-black/50'
+                              ? "border-purple-200 bg-white hover:scale-102 hover:border-purple-400"
+                              : "border-white/10 bg-black/50 hover:scale-102 hover:border-purple-400/60"
                         }`}
                         title={preset.name}
                       >
                         <img
                           src={preset.url}
                           alt={preset.name}
-                          className="w-full h-full object-cover rounded-lg"
+                          className="h-full w-full rounded-lg object-cover"
                         />
                         {isSelected && (
-                          <div className="absolute inset-0 bg-purple-600/40 flex items-center justify-center">
-                            <Check size={14} className="text-white drop-shadow-md" />
+                          <div className="absolute inset-0 flex items-center justify-center bg-purple-600/40">
+                            <Check
+                              size={14}
+                              className="text-white drop-shadow-md"
+                            />
                           </div>
                         )}
                       </button>
-                    );
+                    )
                   })}
                 </div>
               </div>
@@ -419,29 +443,34 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {/* Section 2: Durasi Waktu */}
           <div>
             <h3
-              className={`text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-1.5 pt-2 border-t ${
-                isLight ? 'text-purple-700 border-purple-200/40' : 'text-[#a385db] border-white/10'
+              className={`mb-3 flex items-center gap-1.5 border-t pt-2 text-xs font-bold tracking-widest uppercase ${
+                isLight
+                  ? "border-purple-200/40 text-purple-700"
+                  : "border-white/10 text-[#a385db]"
               }`}
             >
               <BookOpen size={14} /> Durasi Timer Scene (Menit)
             </h3>
             <div className="space-y-2.5">
               {[
-                { id: 'work' as const, label: 'Study (Sesi Fokus)' },
-                { id: 'shortBreak' as const, label: 'Zatsudan (Rehat Pendek)' },
-                { id: 'longBreak' as const, label: 'AFK / BRB (Rehat Panjang)' }
+                { id: "work" as const, label: "Study (Sesi Fokus)" },
+                { id: "shortBreak" as const, label: "Zatsudan (Rehat Pendek)" },
+                {
+                  id: "longBreak" as const,
+                  label: "AFK / BRB (Rehat Panjang)",
+                },
               ].map((item) => (
                 <div
                   key={item.id}
-                  className={`flex justify-between items-center p-3 rounded-2xl border transition-all ${
+                  className={`flex items-center justify-between rounded-2xl border p-3 transition-all ${
                     isLight
-                      ? 'bg-purple-50/70 border-purple-200/80 hover:border-purple-400'
-                      : 'bg-black/40 border-white/5 hover:border-purple-500/20'
+                      ? "border-purple-200/80 bg-purple-50/70 hover:border-purple-400"
+                      : "border-white/5 bg-black/40 hover:border-purple-500/20"
                   }`}
                 >
                   <label
-                    className={`text-xs sm:text-sm font-semibold ${
-                      isLight ? 'text-gray-800' : 'text-gray-300'
+                    className={`text-xs font-semibold sm:text-sm ${
+                      isLight ? "text-gray-800" : "text-gray-300"
                     }`}
                   >
                     {item.label}
@@ -455,16 +484,18 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         onUpdateSettings({
                           ...settings,
-                          [item.id]: Math.max(1, parseInt(e.target.value) || 1)
+                          [item.id]: Math.max(1, parseInt(e.target.value) || 1),
                         })
                       }
-                      className={`w-18 border rounded-xl text-center py-1.5 px-2 text-sm font-bold focus:outline-none transition-colors ${
+                      className={`w-18 rounded-xl border px-2 py-1.5 text-center text-sm font-bold transition-colors focus:outline-none ${
                         isLight
-                          ? 'bg-white border-purple-200 text-gray-900 focus:border-purple-600'
-                          : 'bg-black/60 border-white/15 text-white focus:border-[#a385db]'
+                          ? "border-purple-200 bg-white text-gray-900 focus:border-purple-600"
+                          : "border-white/15 bg-black/60 text-white focus:border-[#a385db]"
                       }`}
                     />
-                    <span className={`text-xs ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>
+                    <span
+                      className={`text-xs ${isLight ? "text-gray-500" : "text-gray-400"}`}
+                    >
                       mnt
                     </span>
                   </div>
@@ -476,31 +507,33 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {/* Section 3: Pemilihan Suara Notifikasi */}
           <div>
             <h3
-              className={`text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-2 pt-2 border-t ${
-                isLight ? 'text-purple-700 border-purple-200/40' : 'text-[#a385db] border-white/10'
+              className={`mb-3 flex items-center gap-2 border-t pt-2 text-xs font-bold tracking-widest uppercase ${
+                isLight
+                  ? "border-purple-200/40 text-purple-700"
+                  : "border-white/10 text-[#a385db]"
               }`}
             >
               <Volume2 size={14} /> Alerts &amp; Notifications
             </h3>
 
             <div
-              className={`space-y-1.5 p-2.5 rounded-2xl border ${
+              className={`space-y-1.5 rounded-2xl border p-2.5 ${
                 isLight
-                  ? 'bg-purple-50/70 border-purple-200/80'
-                  : 'bg-black/40 border-white/5'
+                  ? "border-purple-200/80 bg-purple-50/70"
+                  : "border-white/5 bg-black/40"
               }`}
             >
               {SOUND_OPTIONS.map((sound) => (
                 <div key={sound.id}>
                   <label
-                    className={`flex items-center gap-3 p-3 cursor-pointer transition-colors text-xs sm:text-sm rounded-xl ${
+                    className={`flex cursor-pointer items-center gap-3 rounded-xl p-3 text-xs transition-colors sm:text-sm ${
                       settings.sound === sound.id
                         ? isLight
-                          ? 'bg-purple-200/80 text-purple-950 font-bold border border-purple-300'
-                          : 'bg-[#7a54c7]/25 text-[#c4b5fd] font-semibold border border-purple-500/30'
+                          ? "border border-purple-300 bg-purple-200/80 font-bold text-purple-950"
+                          : "border border-purple-500/30 bg-[#7a54c7]/25 font-semibold text-[#c4b5fd]"
                         : isLight
-                        ? 'text-gray-700 hover:bg-purple-100/50'
-                        : 'text-gray-400 hover:bg-white/5'
+                          ? "text-gray-700 hover:bg-purple-100/50"
+                          : "text-gray-400 hover:bg-white/5"
                     }`}
                   >
                     <input
@@ -511,14 +544,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={() =>
                         onUpdateSettings({ ...settings, sound: sound.id })
                       }
-                      className="w-4 h-4 accent-purple-600 cursor-pointer"
+                      className="h-4 w-4 cursor-pointer accent-purple-600"
                     />
                     <div>
                       <span>{sound.label}</span>
                       {sound.description && (
                         <p
-                          className={`text-[11px] font-normal mt-0.5 ${
-                            isLight ? 'text-gray-500' : 'text-gray-400'
+                          className={`mt-0.5 text-[11px] font-normal ${
+                            isLight ? "text-gray-500" : "text-gray-400"
                           }`}
                         >
                           {sound.description}
@@ -528,75 +561,83 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   </label>
 
                   {/* Input Teks Khusus */}
-                  {sound.id === 'custom-text' && settings.sound === 'custom-text' && (
-                    <div className="ml-8 mt-2 mb-2 pr-2">
-                      <textarea
-                        value={settings.customText}
-                        onChange={(e) =>
-                          onUpdateSettings({
-                            ...settings,
-                            customText: e.target.value
-                          })
-                        }
-                        placeholder="Ketik pesan suara Text-To-Speech untuk timer selesai..."
-                        className={`w-full border p-3 rounded-xl text-xs sm:text-sm focus:outline-none resize-none transition-colors ${
-                          isLight
-                            ? 'bg-white border-purple-200 text-gray-900 focus:border-purple-600'
-                            : 'bg-black/60 border-white/15 text-white focus:border-[#a385db]'
-                        }`}
-                        rows={2}
-                      />
-                    </div>
-                  )}
+                  {sound.id === "custom-text" &&
+                    settings.sound === "custom-text" && (
+                      <div className="mt-2 mb-2 ml-8 pr-2">
+                        <textarea
+                          value={settings.customText}
+                          onChange={(e) =>
+                            onUpdateSettings({
+                              ...settings,
+                              customText: e.target.value,
+                            })
+                          }
+                          placeholder="Ketik pesan suara Text-To-Speech untuk timer selesai..."
+                          className={`w-full resize-none rounded-xl border p-3 text-xs transition-colors focus:outline-none sm:text-sm ${
+                            isLight
+                              ? "border-purple-200 bg-white text-gray-900 focus:border-purple-600"
+                              : "border-white/15 bg-black/60 text-white focus:border-[#a385db]"
+                          }`}
+                          rows={2}
+                        />
+                      </div>
+                    )}
 
                   {/* Input Upload Audio */}
-                  {sound.id === 'custom-audio' && settings.sound === 'custom-audio' && (
-                    <div className="ml-8 mt-2 mb-2 pr-2">
-                      <input
-                        type="file"
-                        accept="audio/*"
-                        onChange={handleAudioUpload}
-                        ref={fileInputRef}
-                        className="hidden"
-                      />
-                      <button
-                        onClick={() => fileInputRef.current?.click()}
-                        className={`w-full stream-btn border border-dashed py-3 px-4 text-xs sm:text-sm rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-colors ${
-                          isLight
-                            ? 'bg-white border-purple-300 text-purple-900 hover:bg-purple-100'
-                            : 'bg-[#1a1625] border-[#a385db]/60 text-gray-300 hover:text-white'
-                        }`}
-                      >
-                        <Upload
-                          size={15}
-                          className={isLight ? 'text-purple-600' : 'text-[#a385db]'}
+                  {sound.id === "custom-audio" &&
+                    settings.sound === "custom-audio" && (
+                      <div className="mt-2 mb-2 ml-8 pr-2">
+                        <input
+                          type="file"
+                          accept="audio/*"
+                          onChange={handleAudioUpload}
+                          ref={fileInputRef}
+                          className="hidden"
                         />
-                        {audioFileName ? 'Ganti File Audio' : 'Upload File (MP3/WAV)'}
-                      </button>
-                      {audioFileName && (
-                        <p
-                          className={`text-xs truncate mt-2 text-center py-1.5 rounded-lg border ${
+                        <button
+                          onClick={() => fileInputRef.current?.click()}
+                          className={`stream-btn flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed px-4 py-3 text-xs transition-colors sm:text-sm ${
                             isLight
-                              ? 'bg-purple-100 text-purple-900 border-purple-200'
-                              : 'bg-black/40 text-[#a385db] border-white/5'
+                              ? "border-purple-300 bg-white text-purple-900 hover:bg-purple-100"
+                              : "border-[#a385db]/60 bg-[#1a1625] text-gray-300 hover:text-white"
                           }`}
                         >
-                          🎵 {audioFileName}
-                        </p>
-                      )}
-                    </div>
-                  )}
+                          <Upload
+                            size={15}
+                            className={
+                              isLight ? "text-purple-600" : "text-[#a385db]"
+                            }
+                          />
+                          {audioFileName
+                            ? "Ganti File Audio"
+                            : "Upload File (MP3/WAV)"}
+                        </button>
+                        {audioFileName && (
+                          <p
+                            className={`mt-2 truncate rounded-lg border py-1.5 text-center text-xs ${
+                              isLight
+                                ? "border-purple-200 bg-purple-100 text-purple-900"
+                                : "border-white/5 bg-black/40 text-[#a385db]"
+                            }`}
+                          >
+                            🎵 {audioFileName}
+                          </p>
+                        )}
+                      </div>
+                    )}
                 </div>
               ))}
             </div>
 
             <button
               onClick={handleTestSound}
-              disabled={settings.sound === 'custom-audio' && !settings.customAudioUrl}
-              className={`stream-btn w-full mt-4 py-3 rounded-2xl font-bold text-xs sm:text-sm flex justify-center items-center gap-2 cursor-pointer active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed transition-all ${
+              disabled={
+                settings.sound === "custom-audio" && !settings.customAudioUrl
+              }
+              className={`stream-btn mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl py-3 text-xs font-bold transition-all active:scale-98 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm ${
                 isLight
-                  ? 'bg-purple-600 text-white hover:bg-purple-700 shadow-md'
-                  : 'bg-transparent border-2 border-[#a385db] text-[#a385db] hover:bg-[#a385db] hover:text-[#1a1625]'
+                  ? "bg-purple-600 text-white shadow-md hover:bg-purple-700"
+                  : "border-2 border-[#a385db] bg-transparent text-[#a385db] hover:bg-[#a385db] hover:text-[#1a1625]"
               }`}
             >
               <Play size={16} fill="currentColor" /> TEST ALERT SOUND
@@ -605,5 +646,5 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

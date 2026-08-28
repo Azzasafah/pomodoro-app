@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title = "【POMODORO】☕ Lo-Fi VTuber Study Stream | Timer & Quest Log",
-  description = "Aesthetic Lo-Fi VTuber Study Stream Pomodoro Timer with interactive Live2D avatar, live chat, quest log to-do list, and customizable stream alerts."
+  description = "Aesthetic Lo-Fi VTuber Study Stream Pomodoro Timer with interactive Live2D avatar, live chat, quest log to-do list, and customizable stream alerts.",
 } = Astro.props
 ---
 
@@ -20,15 +20,20 @@ const {
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#1a1625" />
-    
+
     <!-- Preconnect Google Fonts for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet" />
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+
     <title>{title}</title>
   </head>
-  <body class="antialiased selection:bg-[#7a54c7] selection:text-white min-h-screen overflow-x-hidden">
+  <body
+    class="min-h-screen overflow-x-hidden antialiased selection:bg-[#7a54c7] selection:text-white"
+  >
     <slot />
   </body>
 </html>

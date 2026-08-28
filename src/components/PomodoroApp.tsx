@@ -1,13 +1,13 @@
-import '@/styles/pomodoro.css';
-import { usePomodoroTimer } from '@/hooks/usePomodoroTimer';
-import { StreamHeader } from '@/components/pomodoro/StreamHeader';
-import { AvatarDesk } from '@/components/pomodoro/AvatarDesk';
-import { TimerDisplay } from '@/components/pomodoro/TimerDisplay';
-import { QuestLog } from '@/components/pomodoro/QuestLog';
-import { StreamChat } from '@/components/pomodoro/StreamChat';
-import { StreamControls } from '@/components/pomodoro/StreamControls';
-import { SuperchatAlert } from '@/components/pomodoro/SuperchatAlert';
-import { SettingsModal } from '@/components/pomodoro/SettingsModal';
+import "@/styles/pomodoro.css"
+import { usePomodoroTimer } from "@/hooks/usePomodoroTimer"
+import { StreamHeader } from "@/components/pomodoro/StreamHeader"
+import { AvatarDesk } from "@/components/pomodoro/AvatarDesk"
+import { TimerDisplay } from "@/components/pomodoro/TimerDisplay"
+import { QuestLog } from "@/components/pomodoro/QuestLog"
+import { StreamChat } from "@/components/pomodoro/StreamChat"
+import { StreamControls } from "@/components/pomodoro/StreamControls"
+import { SuperchatAlert } from "@/components/pomodoro/SuperchatAlert"
+import { SettingsModal } from "@/components/pomodoro/SettingsModal"
 
 export default function PomodoroApp() {
   const {
@@ -34,19 +34,19 @@ export default function PomodoroApp() {
     toggleTodo,
     deleteTodo,
     sendUserChat,
-    toggleThemeMode
-  } = usePomodoroTimer();
+    toggleThemeMode,
+  } = usePomodoroTimer()
 
-  const isLight = settings.themeMode === 'light';
+  const isLight = settings.themeMode === "light"
 
   return (
     <div
-      className={`app-wrapper flex items-center justify-center p-2 sm:p-4 lg:p-6 select-none transition-colors duration-300 ${
-        isLight ? 'light-mode' : 'dark-mode'
+      className={`app-wrapper flex items-center justify-center p-2 transition-colors duration-300 select-none sm:p-4 lg:p-6 ${
+        isLight ? "light-mode" : "dark-mode"
       }`}
     >
       {/* Main Stream Frame Container */}
-      <div className="stream-frame w-full max-w-[1300px] min-h-[640px] lg:h-[88vh] flex flex-col relative rounded-[24px]">
+      <div className="stream-frame relative flex min-h-[640px] w-full max-w-[1300px] flex-col rounded-[24px] lg:h-[88vh]">
         {/* Lo-Fi Scanline and Glow Overlay */}
         <div className="lofi-overlay"></div>
 
@@ -58,9 +58,9 @@ export default function PomodoroApp() {
         />
 
         {/* Main Content Layout (Stream Stage 60% & Widgets 40%) */}
-        <div className="flex-1 w-full flex flex-col lg:flex-row relative z-10 p-3 sm:p-5 gap-4 overflow-hidden">
+        <div className="relative z-10 flex w-full flex-1 flex-col gap-4 overflow-hidden p-3 sm:p-5 lg:flex-row">
           {/* LEFT: Stream Content (Avatar & Timer Center) */}
-          <div className="flex-[1.2] relative flex flex-col items-center justify-center pt-2 sm:pt-4 lg:pt-6">
+          <div className="relative flex flex-[1.2] flex-col items-center justify-center pt-2 sm:pt-4 lg:pt-6">
             {/* VTuber Live2D Desk */}
             <AvatarDesk
               avatarUrl={settings.vtuberImage}
@@ -87,7 +87,7 @@ export default function PomodoroApp() {
           </div>
 
           {/* RIGHT: Widgets (Quest Log & Live Chat) */}
-          <div className="flex-1 lg:max-w-[390px] flex flex-col gap-4 z-20 h-full shrink-0">
+          <div className="z-20 flex h-full flex-1 shrink-0 flex-col gap-4 lg:max-w-[390px]">
             {/* Quest Log (To-Do List) */}
             <QuestLog
               todos={todos}
@@ -124,5 +124,5 @@ export default function PomodoroApp() {
         onUpdateSettings={setSettings}
       />
     </div>
-  );
+  )
 }
