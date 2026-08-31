@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import type {
   TimerMode,
   PomodoroSettings,
@@ -34,6 +34,10 @@ export function usePomodoroTimer() {
   const [mode, setMode] = useState<TimerMode>("work")
   const [isActive, setIsActive] = useState<boolean>(false)
   const [timeLeft, setTimeLeft] = useState<number>(settings.work * 60)
+
+  // Track previous settings duration for the active mode to update on config change only
+  const currentDuration = settings[mode] || 25
+  const prevDurationRef = useRef<number>(currentDuration)
 
   // Modals & UI States
   const [showSettings, setShowSettings] = useState<boolean>(false)
@@ -85,12 +89,16 @@ export function usePomodoroTimer() {
     }
   }, [todos])
 
-  // Sync timeLeft when not active and mode or settings duration changes
+  // Only sync timeLeft if settings duration for this mode explicitly changed
   useEffect(() => {
-    if (!isActive) {
-      setTimeLeft((settings[mode] || 25) * 60)
+    if (prevDurationRef.current !== currentDuration) {
+      prevDurationRef.current = currentDuration
+      if (!isActive) {
+        setTimeLeft(currentDuration * 60)
+      }
     }
-  }, [mode, settings, isActive])
+  }, [currentDuration, isActive])
+
 
   // Handle timer completion
   const handleTimerComplete = useCallback(() => {
