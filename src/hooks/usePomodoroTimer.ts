@@ -13,8 +13,8 @@ import {
 } from "@/constants/pomodoro"
 import { triggerSoundAlert } from "@/utils/audio"
 
-const SETTINGS_STORAGE_KEY = "vtuber_pomodoro_settings_v1"
-const TODOS_STORAGE_KEY = "vtuber_pomodoro_todos_v1"
+const SETTINGS_STORAGE_KEY = "vtuber_pomodoro_settings_v2"
+const TODOS_STORAGE_KEY = "vtuber_pomodoro_todos_v2"
 
 export function usePomodoroTimer() {
   // Settings with LocalStorage persistence

@@ -1,7 +1,7 @@
 <div align="center">
 
-# ☕ 【POMODORO】Lo-Fi VTuber Study Stream
-### *An Aesthetic, Gamified Focus Timer & Quest Log Stream Overlay*
+# ⚡ 【NEO TOKYO 2099】電脳集中配信
+### *Aesthetic Cyberpunk Anime Pomodoro Stream & Tactical Quest Terminal*
 
 [![Astro](https://img.shields.io/badge/Astro-5.18+-BC52EE.svg?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
 [![React](https://img.shields.io/badge/React-19.2+-61DAFB.svg?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
@@ -10,210 +10,174 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <b>Turn your daily coding, studying, and deep-work sessions into a cozy, interactive VTuber live broadcast!</b><br>
-  Featuring interactive avatars, a gamified quest log, simulated live viewer chat, superchat celebrations, and full voice/audio alerts.
+  <b>Ubah rutinitas belajar dan coding-mu menjadi siaran langsung ala Cyberpunk Anime VTuber di Neo Tokyo 2099!</b><br>
+  Dilengkapi maskot Live2D Chisa & Rover, digital HUD clock, quest terminal, live comms chat, superchat reward, serta voice synth alerts.
 </p>
 
-[✨ Live Demo](#-getting-started) • [🎮 Key Features](#-features) • [🛠️ Tech Stack](#-tech-stack) • [🚀 Quick Start](#-getting-started) • [⚙️ Customization](#-customization--settings)
+[✨ Fitur Utama](#-fitur-utama) • [🎭 Maskot Chisa & Duo](#-maskot-live2d-chisa--rover) • [🎨 Tema & Estetika](#-tema--estetika-neo-tokyo) • [🛠️ Tech Stack](#%EF%B8%8F-tech-stack) • [🚀 Cara Menjalankan](#-cara-menjalankan)
 
 ---
 
 </div>
 
-## 📖 Overview
+## 📖 Ringkasan / Overview
 
-**Lo-Fi VTuber Study Stream Pomodoro** is a modern, gamified productivity web application built with **Astro 5**, **React 19**, and **Tailwind CSS v4**. 
+**Neo Tokyo 2099 Pomodoro Stream** adalah aplikasi produktivitas berbasis web bertema *Cyberpunk Anime / Techwear* yang dibangun menggunakan **Astro 5**, **React 19**, dan **Tailwind CSS v4**.
 
-Designed with an aesthetic broadcast overlay layout, it recreates the cozy atmosphere of a late-night Lo-Fi study stream. Complete with live stream statistics, an interactive avatar desk, simulated viewer chat, rewarding Superchat alerts, and an RPG-inspired quest tracker, it turns solo study grinds into engaging sessions.
+Menggabungkan estetika antarmuka siaran langsung (OBS broadcast frame), tipografi futuristik Jepang/Cyber (*Orbitron*, *Space Grotesk*, *JetBrains Mono*, *Noto Sans JP*), serta maskot anime interaktif **Chisa (`chisa.png`)** dan **Chisa & Rover Duo (`love.png`)** untuk menciptakan suasana fokus yang imersif dan menyenangkan.
 
 ---
 
-## ✨ Features
+## 🎭 Maskot Live2D: Chisa & Rover
 
-### ⏱️ Triple-Cycle Pomodoro Timer
-- **3 Focused Modes**: Seamlessly switch between **Focus (Work)**, **Short Break (Zatsudan/Coffee)**, and **Long Break (AFK/Rest)**.
-- **Dynamic Color Themes**: Custom pastel palette and ambient glows adapted to each mode (*Sakura Pink*, *Sky Blue*, and *Lilac Purple*).
-- **Smooth Visual Progress**: Circular SVG progress ring, pulsating glow rings, and a retro digital countdown display (`VT323` pixel font).
+Aplikasi ini menyertakan integrasi karakter anime:
 
-### 🎭 Interactive VTuber Avatar Desk
-- **Floating Desk Mascot**: Animated mascot studying alongside you with gentle floating physics.
-- **Preset Avatar Roster**: Choose from presets like *Lilac Adventurer*, *Neko Chan*, *Cyber Kitsune*, *Study Senpai*, *Cozy Barista*, and *Pixel Robo*.
-- **Custom Avatar Support**: Upload your own character image (PNG, GIF, SVG) or provide any image URL.
+| Karakter | Mode | Deskripsi |
+| :--- | :--- | :--- |
+| **Chisa ⚡ (`/chisa.png`)** | `SOLO // UNIT-01` | Chisa dalam balutan sailor techwear bersiap untuk sesi fokus belajar intensif. |
+| **Chisa & Rover ☕ (`/love.png`)** | `DUO // CO-OP` | Chisa & Rover menikmati minuman energi untuk waktu istirahat (recharge & zatsudan). |
 
-### 📜 Gamified Quest Log (To-Do Tracker)
-- **RPG Task Management**: Organize your daily goals as active study quests.
-- **Interactive Checklists**: Smooth completion animations, strikethrough styling, and instant delete controls.
-- **Zero Data Loss**: Auto-saves your quests instantly to browser `localStorage`.
+> 💡 **Quick Switcher**: Klik tombol cepat di pojok kanan atas meja avatar atau menu **CONFIG** untuk berganti karakter instan, atau upload gambar kustom sendiri!
 
-### 💬 Simulated Live Stream Chat & Viewer Reactions
-- **Dynamic Audience**: Automated chatters cheering on your study progress with badges (`MOD`, `VIP`, `BOT`, `SENPAI`).
-- **Interactive Chat Input**: Send your own live messages directly into the stream feed.
-- **Mode Announcements**: Automatic chat notifications when switching between focus and break modes.
+---
 
-### 💰 Rewarding Superchat Alerts
-- **Celebration Banner**: Rewarding animated Superchat banner pops up when timer cycles finish.
-- **Sound & Visual Sparkles**: Coin animations and congratulatory messages (*"Otsukare sama deshita~ 🎉"*).
+## ✨ Fitur Utama
 
-### 🔔 Smart Audio & Text-to-Speech (TTS) Alerts
-- **Built-in Vocal Presets**: Indonesian VTuber voice lines for session start & break alerts.
-- **Browser Web Speech API**: Custom Text-to-Speech engine capable of reading your own custom text.
-- **Custom Audio Upload**: Upload your preferred local sound or MP3 alert.
-- **Synthesized School Chime**: Clean 4-tone melodic school bell.
-- **In-App Audio Preview**: Test voice lines and audio triggers directly inside the settings modal.
+### ⏱️ 1. Digital HUD Chronometer (Pomodoro Timer)
+- **3 Siklus Mode Fokus**:
+  - `[ 集中 FOCUS ]` (Default 25 menit): Sesi fokus kerja/belajar tanpa distraksi.
+  - `[ 小休 BREAK ]` (Default 5 menit): Istirahat singkat & regangkan badan.
+  - `[ 大休 AFK ]` (Default 15 menit): Istirahat panjang / makan & rehidrasi.
+- **Segmented Glowing Progress Meter**: Indikator persentase penyelesaian sesi dengan animasi linear presisi.
+- **Status Taktis HUD**: Menampilkan status transmisi (`FOCUS DRIVE`, `RECHARGE`, `AFK IDLE`).
 
-### 🎨 Themes & Stream Control HUD
-- **Dark Mode & Pastel Light Mode**: Switch between midnight cyber-lofi and dreamy pastel aesthetics.
-- **Broadcast Status Bar**: Interactive Mic / Webcam toggles, LIVE duration counter, FPS, bitrate, and viewer counters.
-- **Lo-Fi CRT Scanline Overlay**: Subtle CRT scanlines and ambient vignette for full stream immersion.
+### 📜 2. Quest Terminal `[ 任務記録 ]` (To-Do List)
+- **Manajemen Tugas Cyber**: Catat semua target belajar dan coding harian.
+- **Checkbox Interaktif**: Animasi checklist tajam dengan coretan status selesai.
+- **Auto-Sync LocalStorage**: Semua tugas tersimpan otomatis di browser tanpa risiko hilang.
+
+### 💬 3. Live Comms Chat `[ 通信ログ ]` (Simulated Audience)
+- **Simulasi Interaksi Penonton**: Komentar dinamis dari penonton dengan role badge (`VIP`, `SYS`, `MOD`, `YOU`).
+- **Interactive Chat Input**: Ketik dan kirim pesanmu sendiri langsung ke feed siaran.
+- **Pengumuman Otomatis**: Bot siaran otomatis menyapa saat timer berganti mode.
+
+### 💰 4. Superchat Pop-in Alert `『SUPERCHAT DETECTED』`
+- Animasi alert bergaya cyberpunk saat menyelesaikan satu siklus timer.
+- Notifikasi reward Rp 50.000 dengan ucapan *"Otsukaresama deshita~ 🎉"*.
+
+### 🔊 5. Voice Alerts & Cyber Synth
+- **Chisa Anime Voice (Bahasa Indonesia)**: Peringatan suara ramah saat memulai dan menyelesaikan sesi.
+- **Custom TTS (Text-to-Speech)**: Suarakan kalimat motivasi kustommu sendiri.
+- **Upload Audio Lokal**: Dukungan file audio MP3/WAV milikmu sendiri.
+- **4-Tone Cyber Chime**: Nada lonceng digital futuristik.
+
+---
+
+## 🎨 Tema & Estetika Neo Tokyo
+
+Aplikasi ini mendukung dua mode tema visual:
+
+1. **Light Mode (Default - Clean Tech / Cyber Platinum)**:
+   - Palet platinum terang (`#f0f0f5`) dengan kontras teks hitam stark (`#09090b`), grid micro halus, dan bayangan lembut yang elegan.
+2. **Dark Mode (Stealth Obsidian / Cyberpunk)**:
+   - Palet hitam obsidian (`#060609`) dengan aksen teks putih, garis cyber tipis, dan scanlines CRT retro.
+
+> 🌓 **1-Click Theme Toggle**: Beralih tema secara instan kapan saja melalui tombol **`LIGHT / DARK`** di header atau menu **`CONFIG`**.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Technology | Purpose |
-| :--- | :--- |
-| **[Astro 5](https://astro.build/)** | Next-generation web framework with high-performance island architecture |
-| **[React 19](https://react.dev/)** | Reactive UI component layer and state management |
-| **[TypeScript](https://www.typescriptlang.org/)** | Strict type safety across components, hooks, and utilities |
-| **[Tailwind CSS v4](https://tailwindcss.com/)** | Cutting-edge utility-first CSS engine with `@theme` design tokens |
-| **[Lucide React](https://lucide.dev/)** | Clean, modern iconography |
-| **[Base UI / shadcn](https://ui.shadcn.com/)** | Accessible component primitives and styling structure |
-| **[Web Audio & Speech API](https://developer.mozilla.org/)** | Native browser sound synthesis and Text-to-Speech audio cues |
+- **Framework**: [Astro v5.18+](https://astro.build/) (Islands Architecture)
+- **UI & Logic**: [React 19](https://react.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) & Vanilla CSS Design System
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Tipografi**: Orbitron, Space Grotesk, JetBrains Mono, & Noto Sans JP
+- **Storage**: Browser `localStorage` (Local-First & Privacy-Focused)
 
 ---
 
-## 📁 Project Structure
+## 📁 Struktur Proyek
 
 ```text
 pomodoro-app/
 ├── public/
-│   └── favicon.svg              # App favicon
+│   ├── chisa.png                # Solo Mascot: Chisa Techwear
+│   ├── love.png                 # Duo Mascot: Chisa & Rover
+│   └── favicon.svg              # App Favicon
 ├── src/
 │   ├── components/
 │   │   ├── pomodoro/
-│   │   │   ├── AvatarDesk.tsx       # VTuber desk mascot & upload trigger
-│   │   │   ├── QuestLog.tsx         # Gamified to-do list widget
-│   │   │   ├── SettingsModal.tsx    # Comprehensive settings dialog
-│   │   │   ├── StreamChat.tsx       # Live chat stream simulator & input
-│   │   │   ├── StreamControls.tsx   # Mic, Cam, & status toggle buttons
-│   │   │   ├── StreamHeader.tsx     # OBS top bar with LIVE badges & stats
-│   │   │   ├── SuperchatAlert.tsx   # Session completion celebration alert
-│   │   │   └── TimerDisplay.tsx     # SVG radial progress & countdown clock
-│   │   ├── ui/                      # Shared UI primitives (Buttons, etc.)
-│   │   └── PomodoroApp.tsx          # Main stream frame container
+│   │   │   ├── AvatarDesk.tsx       # Live2D desk, breathing animation & companion switch
+│   │   │   ├── QuestLog.tsx         # Tactical Quest Terminal (To-Do List)
+│   │   │   ├── SettingsModal.tsx    # Terminal configuration dialog & mascot selector
+│   │   │   ├── StreamChat.tsx       # Live Comms stream chat terminal & input
+│   │   │   ├── StreamControls.tsx   # Floating mic & optic HUD status toggles
+│   │   │   ├── StreamHeader.tsx     # Broadcast bar, theme toggle & audio visualizer
+│   │   │   ├── SuperchatAlert.tsx   # Cyber celebration reward pop-up
+│   │   │   └── TimerDisplay.tsx     # Neo Tokyo digital chronometer & controls
+│   │   └── PomodoroApp.tsx          # Master layout container
 │   ├── constants/
-│   │   └── pomodoro.ts              # Presets, dummy chats, audio options & themes
+│   │   └── pomodoro.ts              # Presets, default settings, chats & theme tokens
 │   ├── hooks/
-│   │   └── usePomodoroTimer.ts      # Core timer engine, chat loop, & storage hook
+│   │   └── usePomodoroTimer.ts      # Core Pomodoro engine, tick loop & storage sync
 │   ├── layouts/
-│   │   └── main.astro               # HTML shell, SEO metadata, and Google Fonts
+│   │   └── main.astro               # HTML head, Google Fonts & SEO metadata
 │   ├── pages/
-│   │   └── index.astro              # Astro entry point mounting PomodoroApp
+│   │   └── index.astro              # Astro page entrypoint
 │   ├── styles/
-│   │   ├── global.css               # Tailwind CSS v4 & theme variables
-│   │   └── pomodoro.css             # Keyframe animations, scanlines & stream frames
+│   │   ├── global.css               # Tailwind CSS v4 setup & theme variables
+│   │   └── pomodoro.css             # Neo Tokyo Light/Dark styling, CRT scanlines & animations
 │   ├── types/
 │   │   └── pomodoro.ts              # TypeScript interfaces & types
 │   └── utils/
-│       ├── audio.ts                 # Audio synthesis, sound player & TTS triggers
+│       ├── audio.ts                 # Web Audio API synth, player & speech synthesis
 │       └── utils.ts                 # Classname utility helpers (clsx & twMerge)
-├── astro.config.mjs                 # Astro configuration
-├── package.json                     # Project dependencies and scripts
-├── tsconfig.json                    # TypeScript compiler options
-└── README.md                        # Documentation
+├── package.json
+└── README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Cara Menjalankan
 
-### Prerequisites
-Make sure you have **Node.js** (v20.0.0 or higher) installed on your machine.
+### Kebutuhan Sistem
+- **Node.js** v20.0.0 atau lebih baru
+- npm / pnpm / yarn
 
-- [Node.js Download](https://nodejs.org/)
+### Langkah Instalasi
+1. Masuk ke direktori proyek:
+   ```bash
+   cd pomodoro-app
+   ```
+2. Pasang dependensi:
+   ```bash
+   npm install
+   ```
+3. Jalankan server lokal:
+   ```bash
+   npm run dev
+   ```
+4. Buka browser di [http://localhost:4321](http://localhost:4321).
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/pomodoro-app.git
-cd pomodoro-app
-```
-
-### 2. Install Dependencies
-```bash
-npm install
-# or
-pnpm install
-# or
-yarn install
-```
-
-### 3. Run Development Server
-```bash
-npm run dev
-```
-
-Open [http://localhost:4321](http://localhost:4321) in your browser to start your study stream!
+### Script yang Tersedia
+- `npm run dev`: Menjalankan server pengembangan Astro.
+- `npm run build`: Membangun bundle produksi statis ke folder `./dist`.
+- `npm run preview`: Melihat preview dari build produksi.
+- `npm run typecheck`: Validasi tipe TypeScript dan komponen Astro (`astro check`).
 
 ---
 
-## 📜 Available Scripts
+## 🔒 Privasi & Keamanan Data
 
-| Command | Description |
-| :--- | :--- |
-| `npm run dev` | Starts the Astro development server at `localhost:4321` |
-| `npm run build` | Builds the production-ready static site to `./dist` |
-| `npm run preview` | Previews the production build locally before deployment |
-| `npm run typecheck` | Validates TypeScript and Astro components with `astro check` |
-| `npm run lint` | Lints project files using ESLint |
-| `npm run format` | Formats all code with Prettier and Tailwind CSS plugin |
-
----
-
-## ⚙️ Customization & Settings
-
-Click the **⚙️ Settings** button on the top right corner of the stream header to customize:
-
-1. **⏱️ Timer Durations**: Adjust Focus, Short Break, and Long Break durations in minutes.
-2. **🔔 Audio Alert Modes**:
-   - *VTuber Voice (Indonesian)*: Native friendly voice lines.
-   - *Text-to-Speech (TTS)*: Custom speech synthesizer reading any phrase you type.
-   - *Local Audio Upload*: Load your own custom audio file (saved locally).
-   - *School Chime*: 4-tone melody chime.
-3. **🎭 Avatar Customization**: Select one of 6 avatar presets, paste a custom image URL, or upload a character portrait.
-4. **🌓 Color Theme**: Toggle between Dark Mode and Light Pastel Mode.
-
-All settings and tasks are saved automatically to your browser's `localStorage`.
-
----
-
-## 🔒 Privacy & Performance
-
-- **100% Client-Side & Local-First**: No data is sent to external servers. Your tasks, timer preferences, and uploaded audio remain private in your browser.
-- **Zero Bloat & Blazing Fast**: Built on Astro's zero-JS-by-default architecture with targeted React islands for peak performance.
-
----
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-Distributed under the **MIT License**. See `LICENSE` for more information.
+- **100% Client-Side & Local-First**: Semua pengaturan timer, riwayat quest, dan foto avatar tersimpan aman di browser kamu tanpa dikirim ke server luar manapun.
+- **Performa Tinggi**: Menggunakan arsitektur Astro Islands dengan konsumsi memori minimal.
 
 ---
 
 <div align="center">
 
-Made with 💜 for students, developers, and VTuber fans everywhere.<br>
-*Happy studying & otsukare sama deshita!* ✨
+Dibuat untuk para developer, pelajar, dan penggemar anime / VTuber.<br>
+*Selamat belajar dan berfokus ria! お疲れ様でした！* ⚡✨
 
 </div>

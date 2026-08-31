@@ -1,143 +1,198 @@
-/* Pomodoro Lo-Fi VTuber Stream Design System & Keyframes */
+/* ==========================================================================
+   NEO TOKYO 2099 // LIGHT & DARK CYBERPUNK ANIME DESIGN SYSTEM
+   ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Noto+Sans+JP:wght@400;500;700;900&family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap');
 
 /* ==========================================================================
-   Base & Dark Theme (Default)
+   Base App Wrapper & Canvas (Default: Light Mode)
    ========================================================================== */
 
 .app-wrapper {
-  font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Space Grotesk', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   width: 100%;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow-x: hidden;
 }
 
-.app-wrapper.dark-mode {
-  background-color: #1a1625;
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(147, 112, 219, 0.18), transparent 28%),
-    radial-gradient(circle at 85% 30%, rgba(255, 182, 193, 0.12), transparent 28%),
-    radial-gradient(circle at 50% 80%, rgba(135, 206, 235, 0.1), transparent 30%);
-  color: #e2e8f0;
-}
-
-/* ==========================================================================
-   Light Mode (Dreamy Pastel Lo-Fi Day Theme)
-   ========================================================================== */
-
+/* Light Mode (Cyber Platinum / Clean Tech) */
 .app-wrapper.light-mode {
-  background-color: #fbf8ff;
+  background-color: #f0f0f5;
   background-image: 
-    radial-gradient(circle at 15% 40%, rgba(255, 182, 193, 0.35), transparent 35%),
-    radial-gradient(circle at 85% 25%, rgba(196, 181, 253, 0.35), transparent 35%),
-    radial-gradient(circle at 50% 85%, rgba(186, 230, 253, 0.3), transparent 38%);
-  color: #2e2344;
+    radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.05) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(255, 42, 95, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 90% 60%, rgba(0, 0, 0, 0.04) 0%, transparent 40%),
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  color: #09090b;
 }
 
-.font-pixel {
-  font-family: 'VT323', monospace;
+/* Dark Mode (Cyber Obsidian / Stealth) */
+.app-wrapper.dark-mode {
+  background-color: #060609;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(255, 42, 95, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 60%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  color: #f4f4f5;
+}
+
+/* Subtle Cyberpunk Cyber Grid Floor */
+.app-wrapper::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.light-mode::before {
+  background: repeating-linear-gradient(0deg, transparent, transparent 48px, rgba(0, 0, 0, 0.02) 49px, rgba(0, 0, 0, 0.02) 50px);
+}
+
+.dark-mode::before {
+  background: repeating-linear-gradient(0deg, transparent, transparent 48px, rgba(255, 255, 255, 0.015) 49px, rgba(255, 255, 255, 0.015) 50px);
+}
+
+.font-cyber {
+  font-family: 'Orbitron', monospace, sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.font-mono-tech {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-jp {
+  font-family: 'Noto Sans JP', 'Space Grotesk', sans-serif;
 }
 
 /* ==========================================================================
-   Stream Frame OBS Style
+   Neo Tokyo Stream Frame (HUD Chassis)
    ========================================================================== */
 
 .stream-frame {
-  border-radius: 24px;
+  border-radius: 20px;
   position: relative;
+  backdrop-filter: blur(20px);
   transition: all 0.3s ease;
-}
-
-.dark-mode .stream-frame {
-  background: linear-gradient(180deg, #2d2640 0%, #15121e 100%);
-  border: 6px solid #4a3b70;
-  box-shadow: 
-    0 0 0 3px #1a1625,
-    0 0 0 6px #5c458f,
-    0 30px 60px rgba(0, 0, 0, 0.85),
-    0 0 40px rgba(122, 84, 199, 0.2);
+  overflow: hidden;
 }
 
 .light-mode .stream-frame {
-  background: linear-gradient(180deg, #ffffff 0%, #f6f0fd 100%);
-  border: 6px solid #c4b5fd;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 246, 250, 0.98) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: 
-    0 0 0 3px #fbf8ff,
-    0 0 0 6px #ddd6fe,
-    0 25px 60px rgba(147, 112, 219, 0.2),
-    0 0 40px rgba(255, 182, 193, 0.25);
+    0 0 0 1px rgba(0, 0, 0, 0.04),
+    0 0 0 2px rgba(0, 0, 0, 0.02),
+    0 25px 60px -15px rgba(0, 0, 0, 0.12),
+    0 0 40px -10px rgba(0, 0, 0, 0.04);
 }
 
-@media (min-width: 768px) {
-  .stream-frame {
-    border-width: 8px;
-  }
+.dark-mode .stream-frame {
+  background: linear-gradient(180deg, rgba(14, 14, 20, 0.95) 0%, rgba(8, 8, 12, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 0.9),
+    0 0 0 2px rgba(255, 255, 255, 0.05),
+    0 25px 60px -15px rgba(0, 0, 0, 0.9),
+    0 0 40px -10px rgba(255, 255, 255, 0.04);
+}
+
+/* HUD Corner Brackets */
+.stream-frame::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border-radius: 14px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.light-mode .stream-frame::before {
+  border: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.dark-mode .stream-frame::before {
+  border: 1px dashed rgba(255, 255, 255, 0.06);
 }
 
 /* ==========================================================================
-   Lo-Fi Scanlines & Vignette Overlay
+   Lo-Fi / CRT Cyber Scanlines & Vignette
    ========================================================================== */
 
 .lofi-overlay {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 5;
-  border-radius: 16px;
-}
-
-.dark-mode .lofi-overlay {
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 4px 4px;
-  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.75);
+  z-index: 6;
+  border-radius: 20px;
 }
 
 .light-mode .lofi-overlay {
   background-image: 
-    linear-gradient(rgba(147, 112, 219, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(147, 112, 219, 0.03) 1px, transparent 1px);
-  background-size: 5px 5px;
-  box-shadow: inset 0 0 100px rgba(147, 112, 219, 0.1);
+    linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, transparent 65%, rgba(0, 0, 0, 0.08) 100%);
+  background-size: 100% 3px, 100% 100%;
+}
+
+.dark-mode .lofi-overlay {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.6) 100%);
+  background-size: 100% 3px, 100% 100%;
 }
 
 /* ==========================================================================
-   Live2D Avatar Desk Area
+   Live2D Chisa & Duo Desk Area
    ========================================================================== */
 
 .vtuber-desk {
   position: absolute;
-  bottom: -10px;
+  bottom: -4px;
   left: 2%;
-  width: 180px;
-  height: 230px;
-  border-radius: 36px 36px 10px 10px;
-  z-index: 2;
+  width: 200px;
+  height: 250px;
+  border-radius: 24px 24px 8px 8px;
+  z-index: 10;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 16px;
-  backdrop-filter: blur(4px);
-  transition: all 0.3s ease;
-}
-
-.dark-mode .vtuber-desk {
-  background: rgba(93, 75, 138, 0.18);
-  border: 3px dashed rgba(147, 112, 219, 0.45);
+  padding-bottom: 12px;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .light-mode .vtuber-desk {
-  background: rgba(235, 222, 255, 0.5);
-  border: 3px dashed rgba(167, 139, 250, 0.6);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(238, 238, 245, 0.9) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.dark-mode .vtuber-desk {
+  background: linear-gradient(180deg, rgba(24, 24, 32, 0.4) 0%, rgba(10, 10, 15, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 15px 35px rgba(0, 0, 0, 0.6);
 }
 
 @media (min-width: 1024px) {
   .vtuber-desk {
-    width: 200px;
-    height: 250px;
-    padding-bottom: 20px;
+    width: 220px;
+    height: 270px;
+    padding-bottom: 14px;
   }
 }
 
@@ -146,77 +201,96 @@
     transform: scaleY(1) translateY(0);
   }
   50% {
-    transform: scaleY(1.025) translateY(-3px);
+    transform: scaleY(1.02) translateY(-4px);
+  }
+}
+
+@keyframes holographicGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15)) drop-shadow(0 0 3px rgba(255, 42, 95, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 6px rgba(255, 42, 95, 0.4));
   }
 }
 
 .vtuber-image-container {
-  width: 130px;
-  height: 180px;
-  border-radius: 18px 18px 0 0;
+  width: 155px;
+  height: 205px;
+  border-radius: 16px 16px 4px 4px;
   overflow: hidden;
   position: relative;
-  border-bottom: none;
   transition: all 0.3s ease;
 }
 
-.dark-mode .vtuber-image-container {
-  box-shadow: 0 0 25px rgba(147, 112, 219, 0.35);
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  background-color: rgba(0, 0, 0, 0.3);
+.light-mode .vtuber-image-container {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: radial-gradient(circle at 50% 30%, rgba(240, 240, 246, 0.95) 0%, rgba(224, 224, 234, 0.98) 100%);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
 }
 
-.light-mode .vtuber-image-container {
-  box-shadow: 0 0 25px rgba(167, 139, 250, 0.3);
-  border: 2px solid rgba(167, 139, 250, 0.4);
-  background-color: rgba(255, 255, 255, 0.6);
+.dark-mode .vtuber-image-container {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: radial-gradient(circle at 50% 30%, rgba(35, 35, 45, 0.8) 0%, rgba(10, 10, 15, 0.95) 100%);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
 }
 
 @media (min-width: 1024px) {
   .vtuber-image-container {
-    width: 145px;
-    height: 195px;
+    width: 175px;
+    height: 225px;
   }
 }
 
 .vtuber-animate {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  animation: breathe 3.2s ease-in-out infinite;
+  object-fit: contain;
+  animation: breathe 3.6s ease-in-out infinite, holographicGlow 4s ease-in-out infinite;
   transform-origin: bottom center;
 }
 
 /* ==========================================================================
-   Side Widgets (Chat & Quest Log)
+   Side Widgets (Tactical Live Comms & Quest Log)
    ========================================================================== */
 
 .side-widget {
-  border-radius: 18px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.dark-mode .side-widget {
-  background: rgba(20, 17, 30, 0.88);
-  backdrop-filter: blur(12px);
-  border: 2px solid rgba(147, 112, 219, 0.25);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
+  transition: all 0.25s ease;
 }
 
 .light-mode .side-widget {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  border: 2px solid rgba(196, 181, 253, 0.5);
-  box-shadow: 0 8px 24px rgba(147, 112, 219, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(246, 246, 250, 0.96) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
-/* Chat Scroll-in Animation */
-@keyframes chatScroll {
+.light-mode .side-widget:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .side-widget {
+  background: linear-gradient(180deg, rgba(16, 16, 22, 0.85) 0%, rgba(10, 10, 14, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.dark-mode .side-widget:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Chat Message Pop In */
+@keyframes cyberCommsIn {
   0% {
-    transform: translateY(12px);
+    transform: translateY(8px);
     opacity: 0;
   }
   100% {
@@ -226,21 +300,23 @@
 }
 
 .chat-msg {
-  animation: chatScroll 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: cyberCommsIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Custom Todo Checkbox */
+/* Todo Items */
 .todo-item {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.dark-mode .todo-item:hover {
-  background: rgba(255, 255, 255, 0.08);
+.light-mode .todo-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.18);
   transform: translateX(2px);
 }
 
-.light-mode .todo-item:hover {
-  background: rgba(147, 112, 219, 0.1);
+.dark-mode .todo-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateX(2px);
 }
 
@@ -250,25 +326,37 @@
   display: grid;
   place-content: center;
   cursor: pointer;
-  transition: background-color 0.15s, border-color 0.15s;
-}
-
-.dark-mode .todo-checkbox {
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 2px solid #a385db;
-}
-
-.dark-mode .todo-checkbox:hover {
-  border-color: #c4b5fd;
+  transition: all 0.15s ease;
 }
 
 .light-mode .todo-checkbox {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 2px solid #8b5cf6;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid rgba(0, 0, 0, 0.35);
 }
 
 .light-mode .todo-checkbox:hover {
-  border-color: #7c3aed;
+  border-color: #000000;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.light-mode .todo-checkbox:checked {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+.dark-mode .todo-checkbox {
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+}
+
+.dark-mode .todo-checkbox:hover {
+  border-color: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.dark-mode .todo-checkbox:checked {
+  background-color: #ffffff;
+  border-color: #ffffff;
 }
 
 .todo-checkbox::before {
@@ -277,83 +365,133 @@
   height: 9px;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em currentColor;
-  background-color: currentColor;
   transform-origin: center;
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
 }
 
-.dark-mode .todo-checkbox::before {
-  color: #a385db;
+.light-mode .todo-checkbox::before {
+  box-shadow: inset 1em 1em #ffffff;
+  background-color: #ffffff;
 }
 
-.light-mode .todo-checkbox::before {
-  color: #7c3aed;
+.dark-mode .todo-checkbox::before {
+  box-shadow: inset 1em 1em #000000;
+  background-color: #000000;
 }
 
 .todo-checkbox:checked::before {
   transform: scale(1);
 }
 
-/* Interactive Buttons */
+/* ==========================================================================
+   Interactive Buttons & HUD Elements
+   ========================================================================== */
+
 .stream-btn {
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.stream-btn:hover:not(:disabled) {
+.light-mode .stream-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(147, 112, 219, 0.35);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.dark-mode .stream-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
 }
 
 .stream-btn:active:not(:disabled) {
   transform: translateY(1px);
 }
 
-/* Superchat Alert Pop In */
-@keyframes popIn {
+/* Superchat Alert Neo Tokyo Animation */
+@keyframes cyberAlertIn {
   0% {
-    transform: scale(0.8) translateY(25px);
+    transform: scale(0.85) translateY(20px);
     opacity: 0;
+    filter: brightness(1.5) blur(4px);
   }
   100% {
     transform: scale(1) translateY(0);
     opacity: 1;
+    filter: brightness(1) blur(0);
   }
 }
 
 .sc-alert {
-  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation: cyberAlertIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Equalizer Bars Animation */
+@keyframes eqBar {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 14px;
+  }
+}
+
+.eq-bar-1 { animation: eqBar 0.8s ease-in-out infinite; }
+.eq-bar-2 { animation: eqBar 0.6s ease-in-out infinite 0.15s; }
+.eq-bar-3 { animation: eqBar 0.9s ease-in-out infinite 0.3s; }
+.eq-bar-4 { animation: eqBar 0.7s ease-in-out infinite 0.2s; }
 
 /* Custom Scrollbars */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
-}
-
-.dark-mode .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
-}
-
-.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #7a54c7;
-  border-radius: 4px;
-}
-
-.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #9370db;
+  width: 4px;
 }
 
 .light-mode .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(235, 222, 255, 0.4);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
 }
 
 .light-mode .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #c4b5fd;
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .light-mode .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #a78bfa;
+  background: rgba(0, 0, 0, 0.4);
 }
+
+.dark-mode .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+
+.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* Glitch subtle animation */
+@keyframes glitchText {
+  0%, 92%, 100% {
+    transform: translate(0);
+  }
+  93% {
+    transform: translate(-1px, 1px);
+  }
+  95% {
+    transform: translate(1px, -1px);
+  }
+  97% {
+    transform: translate(0, 1px);
+  }
+}
+
+.glitch-hover:hover {
+  animation: glitchText 0.3s infinite;
+}
+
+

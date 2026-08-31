@@ -1,5 +1,5 @@
 import React, { useState, type SyntheticEvent } from "react"
-import { CheckSquare, Plus, Trash2 } from "lucide-react"
+import { Plus, Trash2, Crosshair, ListTodo } from "lucide-react"
 import type { TodoItem } from "@/types/pomodoro"
 
 interface QuestLogProps {
@@ -12,7 +12,7 @@ interface QuestLogProps {
 
 export const QuestLog: React.FC<QuestLogProps> = ({
   todos,
-  themeMode = "dark",
+  themeMode = "light",
   onAddTodo,
   onToggleTodo,
   onDeleteTodo,
@@ -30,29 +30,38 @@ export const QuestLog: React.FC<QuestLogProps> = ({
   const completedCount = todos.filter((t) => t.completed).length
 
   return (
-    <div className="side-widget flex min-h-[220px] flex-[0.9] flex-col p-3.5">
+    <div className="side-widget flex min-h-[220px] flex-[0.95] flex-col p-3.5 sm:p-4">
+      {/* Header */}
       <div
-        className={`mb-3 flex items-center justify-between border-b pb-2 text-sm font-semibold ${
-          isLight
-            ? "border-purple-200/70 text-purple-950"
-            : "border-white/10 text-gray-300"
+        className={`mb-3 flex items-center justify-between border-b pb-2.5 ${
+          isLight ? "border-black/10" : "border-white/10"
         }`}
       >
         <div className="flex items-center gap-2">
-          <CheckSquare
-            size={16}
-            className={isLight ? "text-purple-600" : "text-[#a385db]"}
-          />
-          <span>Quest Log (To-Do)</span>
+          <Crosshair size={14} className={isLight ? "text-black" : "text-white"} />
+          <span
+            className={`font-cyber text-xs font-bold tracking-wider ${
+              isLight ? "text-zinc-900" : "text-white"
+            }`}
+          >
+            QUEST TERMINAL
+          </span>
+          <span
+            className={`font-jp text-[10px] ${
+              isLight ? "text-zinc-500" : "text-zinc-400"
+            }`}
+          >
+            [ 任務記録 ]
+          </span>
         </div>
         <span
-          className={`rounded-full border px-2.5 py-0.5 text-xs font-bold ${
+          className={`font-mono-tech rounded-full border px-2.5 py-0.5 text-[10px] font-bold shadow-sm ${
             isLight
-              ? "border-purple-200 bg-purple-100 text-purple-800"
-              : "border-white/10 bg-black/60 text-purple-300"
+              ? "border-black/10 bg-black/5 text-zinc-800"
+              : "border-white/20 bg-black/80 text-zinc-200"
           }`}
         >
-          {completedCount}/{todos.length}
+          {completedCount} / {todos.length} SYNCED
         </span>
       </div>
 
@@ -60,13 +69,18 @@ export const QuestLog: React.FC<QuestLogProps> = ({
       <div className="custom-scrollbar mb-2 max-h-[160px] flex-1 space-y-2 overflow-y-auto pr-1.5 lg:max-h-[190px]">
         {todos.length === 0 ? (
           <div
-            className={`flex h-full min-h-[80px] items-center justify-center p-4 text-center text-xs italic ${
-              isLight ? "text-purple-400" : "text-gray-500"
+            className={`flex h-full min-h-[80px] flex-col items-center justify-center p-4 text-center font-mono-tech text-xs ${
+              isLight ? "text-zinc-400" : "text-zinc-500"
             }`}
           >
-            Belum ada tugas di Quest Log.
-            <br />
-            Tambahkan tugas barumu di bawah!
+            <ListTodo
+              size={20}
+              className={`mb-1 ${isLight ? "text-zinc-400" : "text-zinc-600"}`}
+            />
+            <span>NO ACTIVE DIRECTIVES.</span>
+            <span className="text-[10px] opacity-75">
+              Input new directive below.
+            </span>
           </div>
         ) : (
           todos.map((todo) => (
@@ -75,14 +89,14 @@ export const QuestLog: React.FC<QuestLogProps> = ({
               className={`todo-item flex items-center justify-between rounded-xl border p-2.5 transition-all ${
                 todo.completed
                   ? isLight
-                    ? "border-transparent bg-purple-100/50 opacity-60"
-                    : "border-transparent bg-black/25 opacity-60"
+                    ? "border-black/5 bg-black/[0.02] opacity-45"
+                    : "border-white/5 bg-white/[0.02] opacity-45"
                   : isLight
-                    ? "border-purple-200/70 bg-purple-50/80 text-[#2e2344] hover:border-purple-300"
-                    : "border-white/5 bg-black/45 text-gray-200 hover:border-purple-500/20"
+                    ? "border-black/10 bg-black/[0.03] text-zinc-900 hover:border-black/20 hover:bg-black/[0.06]"
+                    : "border-white/10 bg-black/40 text-zinc-200 hover:border-white/30 hover:bg-black/60"
               }`}
             >
-              <label className="mr-2 flex flex-1 cursor-pointer items-center gap-3 overflow-hidden">
+              <label className="mr-2 flex flex-1 cursor-pointer items-center gap-2.5 overflow-hidden">
                 <input
                   type="checkbox"
                   checked={todo.completed}
@@ -90,14 +104,14 @@ export const QuestLog: React.FC<QuestLogProps> = ({
                   className="todo-checkbox h-4 w-4 shrink-0"
                 />
                 <span
-                  className={`truncate text-xs select-text sm:text-sm ${
+                  className={`truncate text-xs select-text sm:text-sm font-sans ${
                     todo.completed
                       ? isLight
-                        ? "text-purple-400 line-through"
-                        : "text-gray-500 line-through"
+                        ? "text-zinc-400 line-through"
+                        : "text-zinc-500 line-through"
                       : isLight
-                        ? "font-medium text-[#2e2344]"
-                        : "text-gray-200"
+                        ? "font-medium text-zinc-900"
+                        : "font-medium text-zinc-100"
                   }`}
                 >
                   {todo.text}
@@ -105,12 +119,8 @@ export const QuestLog: React.FC<QuestLogProps> = ({
               </label>
               <button
                 onClick={() => onDeleteTodo(todo.id)}
-                className={`shrink-0 cursor-pointer rounded-lg p-1.5 transition-colors ${
-                  isLight
-                    ? "text-gray-400 hover:bg-red-50 hover:text-red-500"
-                    : "text-gray-500 hover:bg-white/5 hover:text-red-400"
-                }`}
-                title="Hapus tugas"
+                className="shrink-0 cursor-pointer rounded-lg p-1.5 text-zinc-400 transition-colors hover:bg-rose-500/20 hover:text-rose-500"
+                title="Hapus Tugas"
               >
                 <Trash2 size={13} />
               </button>
@@ -122,30 +132,30 @@ export const QuestLog: React.FC<QuestLogProps> = ({
       {/* Add Todo Input */}
       <form
         onSubmit={handleSubmit}
-        className={`mt-auto flex gap-2 border-t pt-2 ${
-          isLight ? "border-purple-200/70" : "border-white/10"
+        className={`mt-auto flex gap-2 border-t pt-2.5 ${
+          isLight ? "border-black/10" : "border-white/10"
         }`}
       >
         <input
           type="text"
           value={newQuestText}
           onChange={(e) => setNewQuestText(e.target.value)}
-          placeholder="Tambah quest baru..."
-          className={`flex-1 rounded-xl border px-3 py-2 text-xs transition-colors focus:outline-none ${
+          placeholder="Tambah quest / direktif baru..."
+          className={`flex-1 rounded-xl border px-3 py-2 font-sans text-xs focus:outline-none ${
             isLight
-              ? "border-purple-200/80 bg-white text-[#2e2344] placeholder:text-purple-400 focus:border-purple-500"
-              : "border-white/10 bg-black/60 text-white placeholder:text-gray-500 focus:border-[#a385db]"
+              ? "border-black/10 bg-black/5 text-zinc-900 placeholder:text-zinc-400 focus:border-black/30"
+              : "border-white/10 bg-black/60 text-white placeholder:text-zinc-600 focus:border-white/40"
           }`}
         />
         <button
           type="submit"
           disabled={!newQuestText.trim()}
-          className={`cursor-pointer rounded-xl border px-3 py-2 transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
+          className={`flex cursor-pointer items-center justify-center rounded-xl border px-3 py-2 font-bold transition-all ${
             isLight
-              ? "border-purple-600 bg-purple-600 text-white hover:bg-purple-700"
-              : "border-[#a385db]/50 bg-[#a385db]/20 text-[#a385db] hover:bg-[#a385db] hover:text-white"
+              ? "border-black bg-black text-white hover:bg-zinc-800 disabled:cursor-not-allowed disabled:border-black/10 disabled:bg-black/10 disabled:text-zinc-400"
+              : "border-white bg-white text-black hover:bg-zinc-200 disabled:cursor-not-allowed disabled:border-white/10 disabled:bg-white/10 disabled:text-zinc-600"
           }`}
-          title="Tambah Quest"
+          title="Tambah Directive"
         >
           <Plus size={15} />
         </button>
@@ -153,3 +163,5 @@ export const QuestLog: React.FC<QuestLogProps> = ({
     </div>
   )
 }
+
+

@@ -7,8 +7,8 @@ interface Props {
 }
 
 const {
-  title = "【POMODORO】☕ Lo-Fi VTuber Study Stream | Timer & Quest Log",
-  description = "Aesthetic Lo-Fi VTuber Study Stream Pomodoro Timer with interactive Live2D avatar, live chat, quest log to-do list, and customizable stream alerts.",
+  title = "【NEO TOKYO 2099】⚡ Cyberpunk Anime Study Stream | Chisa & Timer HUD",
+  description = "Aesthetic Neo Tokyo Dark Monochrome Anime Pomodoro Timer with interactive Chisa Live2D avatar, live comms chat, cyberpunk quest log, and tactical stream HUD.",
 } = Astro.props
 ---
 
@@ -19,21 +19,23 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#1a1625" />
+    <meta name="theme-color" content="#f0f0f5" />
 
     <!-- Preconnect Google Fonts for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=VT323&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Noto+Sans+JP:wght@400;500;700;900&family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap"
       rel="stylesheet"
     />
 
     <title>{title}</title>
   </head>
   <body
-    class="min-h-screen overflow-x-hidden antialiased selection:bg-[#7a54c7] selection:text-white"
+    class="min-h-screen bg-[#f0f0f5] text-zinc-900 overflow-x-hidden antialiased selection:bg-black selection:text-white"
   >
     <slot />
   </body>
 </html>
+
+

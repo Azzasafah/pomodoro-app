@@ -41,13 +41,13 @@ export default function PomodoroApp() {
 
   return (
     <div
-      className={`app-wrapper flex items-center justify-center p-2 transition-colors duration-300 select-none sm:p-4 lg:p-6 ${
+      className={`app-wrapper ${
         isLight ? "light-mode" : "dark-mode"
-      }`}
+      } flex items-center justify-center p-2 select-none sm:p-4 lg:p-6`}
     >
       {/* Main Stream Frame Container */}
-      <div className="stream-frame relative flex min-h-[640px] w-full max-w-[1300px] flex-col rounded-[24px] lg:h-[88vh]">
-        {/* Lo-Fi Scanline and Glow Overlay */}
+      <div className="stream-frame relative flex min-h-[640px] w-full max-w-[1320px] flex-col lg:h-[88vh]">
+        {/* Lo-Fi / CRT Scanline Overlay */}
         <div className="lofi-overlay"></div>
 
         {/* OBS Stream Top Header */}
@@ -61,7 +61,7 @@ export default function PomodoroApp() {
         <div className="relative z-10 flex w-full flex-1 flex-col gap-4 overflow-hidden p-3 sm:p-5 lg:flex-row">
           {/* LEFT: Stream Content (Avatar & Timer Center) */}
           <div className="relative flex flex-[1.2] flex-col items-center justify-center pt-2 sm:pt-4 lg:pt-6">
-            {/* VTuber Live2D Desk */}
+            {/* Live2D Desk (Chisa / Duo Mascot) */}
             <AvatarDesk
               avatarUrl={settings.vtuberImage}
               onAvatarChange={(newUrl) =>
@@ -87,7 +87,7 @@ export default function PomodoroApp() {
           </div>
 
           {/* RIGHT: Widgets (Quest Log & Live Chat) */}
-          <div className="z-20 flex h-full flex-1 shrink-0 flex-col gap-4 lg:max-w-[390px]">
+          <div className="z-20 flex h-full flex-1 shrink-0 flex-col gap-4 lg:max-w-[400px]">
             {/* Quest Log (To-Do List) */}
             <QuestLog
               todos={todos}
@@ -97,7 +97,7 @@ export default function PomodoroApp() {
               onDeleteTodo={deleteTodo}
             />
 
-            {/* Live Stream Chat */}
+            {/* Live Stream Comms Chat */}
             <StreamChat
               chatLog={chatLog}
               themeMode={settings.themeMode}
@@ -126,3 +126,4 @@ export default function PomodoroApp() {
     </div>
   )
 }
+
